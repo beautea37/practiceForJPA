@@ -30,10 +30,24 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-test'
 
+    testImplementation("org.junit.vintage:junit-vintage-engine") {
+        exclude group: "org.hamcrest", module: "hamcrest-core"
+    }
+
     implementation 'org.springframework.boot:spring-boot-devtools'
+
+//    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+//    implementation 'io.micrometer:micrometer-observation:1.10.8'
+
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
 
 }
 
 tasks.named('test') {
+    useJUnitPlatform()
+}
+
+test {
     useJUnitPlatform()
 }
