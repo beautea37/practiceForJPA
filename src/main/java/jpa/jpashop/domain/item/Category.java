@@ -29,7 +29,7 @@ public class Category {
     //객체는 CollectionData때문에 다대다 관계가 가능한데 관계형 DB는 Collection관계를 양 쪽에 못가져서 중간 테이블이 필요하다.
     private List<Item> items = new ArrayList<>();
 
-    @ManyToOne      //부모니까
+    @ManyToOne(fetch = FetchType .LAZY)      //부모니까
     @JoinColumn(name="parent_id")
     private  Category parent;
 
@@ -37,10 +37,11 @@ public class Category {
     private List<Category> child = new ArrayList<>();
 
 
-
-
-
-
+    //연관관계 메서드. 양방향일 때 넣어줌.
+    public void addChildCategory(Category child) {
+        this.child.add(child);
+        child.setParent(this);
+    }
 
 
 
