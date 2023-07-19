@@ -8,7 +8,6 @@ import jpa.jpashop.domain.item.Book;
 import jpa.jpashop.domain.Order;
 import jpa.jpashop.domain.OrderStatus;
 import jpa.jpashop.domain.item.Item;
-import jpa.jpashop.repository.OrderRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
