@@ -26,6 +26,8 @@ public class MemberService {
         return member.getId();
     }
 
+    
+    //중복 회원 조회
     private void validateDuplicateMember(Member member) {
         //EXCEPTION
         //Member를 세서 0보다 크면 빠꾸 방식도 가능.

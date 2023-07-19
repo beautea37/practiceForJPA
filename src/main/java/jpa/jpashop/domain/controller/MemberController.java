@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class MemberController {
         return "members/createMemberForm";
     }
 
-    @PostMapping("members/new")
+    @PostMapping("/members/new")
     public String create(@Valid MemberForm form, BindingResult result) {
 
         if (result.hasErrors()) {
@@ -40,4 +41,16 @@ public class MemberController {
         memberService.join(member);
         return "redirect:/";
     }
+
+    @GetMapping("/members")
+    //dto를 브릿지로 뽑아와서 쓰는 편이 좋을 수 있음
+    public String list(Model model) {
+
+
+        List<Member> members = memberService.findMembers();
+        model.addAttribute("members", members);
+
+        return "members/memberList";
+    }
+
 }

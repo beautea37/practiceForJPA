@@ -16,7 +16,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional  //변경되는 값이니 readOnly false 줘야
-    public void save(Item item) {
+    public void saveItem(Item item) {
         itemRepository.save(item);
     }
 
