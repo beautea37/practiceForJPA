@@ -1,4 +1,4 @@
-package jpa.jpashop.domain.controller;
+package jpa.jpashop.controller;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ public class BookForm {
     private String name;
     private int price;
     private int stockQuantity;
-    
+
     private String author;
     private String isbn;
 }

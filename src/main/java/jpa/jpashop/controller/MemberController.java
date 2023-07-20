@@ -1,4 +1,4 @@
-package jpa.jpashop.domain.controller;
+package jpa.jpashop.controller;
 
 import jpa.jpashop.domain.Address;
 import jpa.jpashop.domain.Member;
@@ -25,6 +25,11 @@ public class MemberController {
         return "members/createMemberForm";
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////아랫 부분이요아랫 부분이요아랫 부분이요아랫 부분이요//////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @PostMapping("/members/new")
     public String create(@Valid MemberForm form, BindingResult result) {
 
@@ -32,14 +37,15 @@ public class MemberController {
             return "members/createMemberForm";
         }
 
-        Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
-
+        Address address = new Address(form.getCity(), form.getStreet(),
+                form.getZipcode());
         Member member = new Member();
         member.setName(form.getName());
         member.setAddress(address);
 
         memberService.join(member);
         return "redirect:/";
+
     }
 
     @GetMapping("/members")
