@@ -1,5 +1,6 @@
 package jpa.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,20 +28,25 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)      //왜 OTM인지 계속 곱씹어라 #의문
+    @JsonIgnore
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    //##의문
+    //왜 OTM인지 계속 곱씹어라
     // cascade = CascadeType.ALL 은 order 객체와 라이프사이클을 공유하는 OrderItem 객체에 대한 처리를 지정
     // 즉, 주문(Order) 객체가 생성, 수정, 삭제 등이 이루어질 때 연관된 주문 항목(OrderItem) 객체들도 같이 처리됨.
     //이거 세팅해놓으면 주문과 주문항목 사이를 따로 처리하는 번거로움을 덜 수 있다.
-
     private List<OrderItem> orderItems = new ArrayList<>();
 
-
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
+
+
     private LocalDateTime orderDate;    //주문 시간
 
+    @Enumerated(EnumType.STRING)
     private OrderStatus status; //주문 상태. order, cancel 추가.
 
 
@@ -53,7 +59,7 @@ public class Order {
         member.getOrders().add(this);
     }
 
-    public void addOrderItems(OrderItem orderItem) {
+    public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
@@ -69,7 +75,7 @@ public class Order {
         order.setMember(member);
         order.setDelivery(delivery);
         for (OrderItem orderItem : orderItems) {
-            order.addOrderItems(orderItem);
+            order.addOrderItem(orderItem);
         }
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());

@@ -18,7 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderRepository {
 
-    @PersistenceContext
     private final EntityManager em;
 
     public void save(Order order) {
@@ -28,8 +27,6 @@ public class OrderRepository {
     public Order findOne(Long id) {
         return em.find(Order.class, id);
     }
-
-
 
 
     /*JPA Criteria 동적쿼리*/
