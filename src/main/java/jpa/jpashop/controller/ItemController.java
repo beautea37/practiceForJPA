@@ -30,12 +30,12 @@ public class ItemController {
     public String create(BookForm form) {
 
         Book book = new Book();
-//        book.setName(form.getName());
-//        book.setPrice(form.getPrice());
-//        book.setStockQuantity(form.getStockQuantity());
-//        book.setAuthor(form.getAuthor());
-//        book.setIsbn(form.getIsbn());
-
+        book.setName(form.getName());
+        book.setPrice(form.getPrice());
+        book.setStockQuantity(form.getStockQuantity());
+        book.setAuthor(form.getAuthor());
+        book.setIsbn(form.getIsbn());
+        //##리팩토링. set 갈기는 것보다는 createBook 이런식으로 파라미터를 넘기는게 더 나은 설계. 나중에 수정 요망
 
 
         itemService.saveItem(book);

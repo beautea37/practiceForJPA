@@ -35,8 +35,8 @@ public class OrderService {
         //배송정보 생성
         Delivery delivery = new Delivery();
         delivery.setAddress(member.getAddress());
-        delivery.setStatus(DeliveryStatus.READY);
-        
+//        delivery.setStatus(DeliveryStatus.READY);       //###
+
         //주문상품 생성하기. 생성 메소드 이용해서
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
 
@@ -68,23 +68,5 @@ public class OrderService {
     public List<Order> findOrders(OrderSearch orderSearch) {
         return orderRepository.findAllByCriteria(orderSearch);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 

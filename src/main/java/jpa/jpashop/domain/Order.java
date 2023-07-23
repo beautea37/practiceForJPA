@@ -28,7 +28,6 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     //##의문
     //왜 OTM인지 계속 곱씹어라
@@ -37,16 +36,13 @@ public class Order {
     //이거 세팅해놓으면 주문과 주문항목 사이를 따로 처리하는 번거로움을 덜 수 있다.
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-
-
     private LocalDateTime orderDate;    //주문 시간
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)      책이랑 강의랑 다름 ##지워야될 수도
     private OrderStatus status; //주문 상태. order, cancel 추가.
 
 
