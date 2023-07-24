@@ -53,11 +53,19 @@ public class OrderController {
 
         return "order/orderList";
     }
-
+//@GetMapping("/orders")
+//public String orderList(OrderSearch orderSearch, Model model) {
+//    List<Order> orders = orderService.findOrders(orderSearch);
+//    model.addAttribute("orders", orders);
+//    model.addAttribute("orderSearch", orderSearch);
+//
+//    return "order/orderList";
+//}
 
     @PostMapping("/orders/{orderId}/cancel")
     public String cancelOrder(@PathVariable("orderId") Long orderId) {
         orderService.cancelOrder(orderId);
+
         return "redirect:/orders";
     }
 }

@@ -25,7 +25,7 @@ public class ItemUpdateTest {
         //변경감지 == dirty checking
 
         //when
-        
+
         //then
-        }
+    }
 }
