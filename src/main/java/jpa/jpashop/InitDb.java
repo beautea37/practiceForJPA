@@ -29,7 +29,7 @@ public class InitDb {
         private final EntityManager em;
 
         public void dbInit1() {
-            Member member = createMember("userA", "서울", "1", "10000");
+            Member member = createMember("userA", "서울", "1", "1111");
             em.persist(member);
 
             Book book1 = createBook("JPA1", 10000, 100);
@@ -41,8 +41,8 @@ public class InitDb {
             OrderItem orderItem1 = OrderItem.createOrderItem(book1, 10000, 1);
             OrderItem orderItem2 = OrderItem.createOrderItem(book2, 20000, 2);
 
-            Delivery delivery = new Delivery();
-            delivery.setAddress(member.getAddress());
+//            Delivery delivery = new Delivery(member);
+//            delivery.setAddress(member.getAddress());
             Order order = Order.createOrder(member, createDelivery(member),
                     orderItem1, orderItem2);
             em.persist(order);
@@ -55,15 +55,15 @@ public class InitDb {
 
             Book book1 = createBook("SPRING1", 20000, 200);
             em.persist(book1);
+
             Book book2 = createBook("SPRING2", 40000, 300);
             em.persist(book2);
 
+            Delivery delivery = createDelivery(member);
             OrderItem orderItem1 = OrderItem.createOrderItem(book1, 20000, 3);
             OrderItem orderItem2 = OrderItem.createOrderItem(book2, 40000, 4);
 
-            Delivery delivery = createDelivery(member);
-
-            delivery.setAddress(member.getAddress());
+//            delivery.setAddress(member.getAddress());
             Order order = Order.createOrder(member, delivery, orderItem1, orderItem2);
             em.persist(order);
         }

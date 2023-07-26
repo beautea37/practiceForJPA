@@ -3,6 +3,7 @@ package jpa.jpashop.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,7 @@ public class Member {
     @Embedded
     private Address address;
 
-
-
+    @JsonIgnore
     //FK가 중복일 가까운 테이블을 FK메인으로 두면 됨.
     //그래서 여기다가는 MAPPED를 ORDER라고 선언해준 것.
     //쉽게 표현하면 읽기 전용이라 봐라 그냥

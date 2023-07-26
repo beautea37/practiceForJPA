@@ -14,13 +14,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     @Column(name = "order_id")
     private Long id;
 
@@ -28,21 +26,18 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+
     //##의문
     //왜 OTM인지 계속 곱씹어라
     // cascade = CascadeType.ALL 은 order 객체와 라이프사이클을 공유하는 OrderItem 객체에 대한 처리를 지정
     // 즉, 주문(Order) 객체가 생성, 수정, 삭제 등이 이루어질 때 연관된 주문 항목(OrderItem) 객체들도 같이 처리됨.
     //이거 세팅해놓으면 주문과 주문항목 사이를 따로 처리하는 번거로움을 덜 수 있다.
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
-
-
 
     private LocalDateTime orderDate;    //주문 시간
 
