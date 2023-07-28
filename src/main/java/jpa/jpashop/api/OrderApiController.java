@@ -5,6 +5,7 @@ import jpa.jpashop.repository.OrderRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -47,6 +48,7 @@ public class OrderApiController {
         return result;
     }
 
+    //Hibernate6부터 distinct가 해결됬음.
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
         List<Order> orders = orderRepository.findAllWithItem();
@@ -59,7 +61,19 @@ public class OrderApiController {
                 .collect(Collectors.toList());
 
         return result;
+    }
 
+    @GetMapping("/api/v3.1/orders")     //페이징 처리 위한
+    public List<OrderDto> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                        @RequestParam(value = "limit", defaultValue = "100") int limit) {
+
+        List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit);
+
+        List<OrderDto> result = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+
+        return result;
     }
 
     @Getter
@@ -99,16 +113,6 @@ public class OrderApiController {
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }
