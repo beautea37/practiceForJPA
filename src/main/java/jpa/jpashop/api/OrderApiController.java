@@ -2,6 +2,8 @@ package jpa.jpashop.api;
 
 import jpa.jpashop.domain.*;
 import jpa.jpashop.repository.OrderRepository;
+import jpa.jpashop.repository.order.query.OrderFlatDto;
+import jpa.jpashop.repository.order.query.OrderItemQueryDto;
 import jpa.jpashop.repository.order.query.OrderQueryDto;
 import jpa.jpashop.repository.order.query.OrderQueryRepository;
 import lombok.Getter;
@@ -14,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +24,7 @@ public class OrderApiController {
 
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
+
     /**
      * V1. 엔티티 직접 노출
      * - Hibernate5Module 모듈 등록, LAZY=null 처리
@@ -69,7 +72,7 @@ public class OrderApiController {
     }
 
     //페이징 처리 & 효율
-    @GetMapping("/api/v3.1/orders")     
+    @GetMapping("/api/v3.1/orders")
     public List<OrderDto> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
                                         @RequestParam(value = "limit", defaultValue = "100") int limit) {
 
@@ -94,6 +97,15 @@ public class OrderApiController {
     public List<OrderQueryDto> ordersV5() {
 
         return orderQueryRepository.findAllByDto_optimization();
+    }
+
+    @GetMapping("/api/v6/orders")
+    public List<OrderQueryDto> ordersV6() {
+        List<OrderFlatDto> flats = orderQueryRepository.findAllByDto_flat();
+
+        return flats.stream()
+                .collect(groupingBy(o -> new OrderQueryDto(o.getOrderId(), o.getName(), o.getOrderDate(), o.getOrderStatus(), o.getAddress()), mapping(o -> new OrderItemQueryDto(o.getOrderId(), o.getItemName(), o.getOrderPrice(), o.getCount()), toList()))).entrySet().stream()
+                .map(e -> new OrderQueryDto(e.getKey().getOrderId(), e.getKey().getName(), e.getKey().getOrderDate(), e.getKey().getOrderStatus(), e.getKey().getAddress(), e.getValue())).collect(toList());
     }
 
     @Getter
@@ -136,3 +148,7 @@ public class OrderApiController {
 
 
 }
+
+
+
+
