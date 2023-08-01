@@ -3,6 +3,8 @@ package jpa.jpashop.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+
+//Not Entity
 @Getter
 @Setter
 public class OrderSearch {
