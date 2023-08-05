@@ -48,7 +48,7 @@ public class Order {
     //연관 관계 메서드.
     //오더와 멤버는 양방향 관계인데, 그렇기 때문에 양방향 세팅을 해주는게 좋음.
     //한쪽에다가 적으면 되는데 전반적으로 컨트롤 하는 쪽에다가 넣는 것이 좋다.
-    //#의문
+    //##https://www.youtube.com/watch?v=hsSc5epPXDs&t=604s&ab_channel=%EB%B0%B1%EA%B8%B0%EC%84%A0 백기선 유튜브 참조
     public void setMember(Member member) {
         this.member = member;
         member.getOrders().add(this);

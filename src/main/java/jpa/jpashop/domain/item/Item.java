@@ -37,6 +37,8 @@ public abstract class Item {
         this.stockQuantity += quantity;
     }
 
+
+    //재고 삭제
     public void removeStock(int orderQuantity) {
         int restStock = this.stockQuantity - orderQuantity;
         if (restStock < 0) {

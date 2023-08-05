@@ -11,6 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberRepositoryOld {
 
+
     private final EntityManager em;
 
     //member에 em속성 부여
