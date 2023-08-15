@@ -51,7 +51,6 @@ public class MemberApiController {
         private String name;
     }
 
-    ////////////////////////////////
 
 
     //Entity를 직접 파라미터로 받으면 나중에 다른 쪽에서 Entity명을 변경하거나 할 때 큰 장애가 발생하니
