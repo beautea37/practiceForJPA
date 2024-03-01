@@ -20,29 +20,31 @@ public class ItemController {
 
     @GetMapping("/items/new")
     public String createForm(Model model) {
-        model.addAttribute("form", new BookForm());
+        model.addAttribute("form", new ItemForm());
         return "items/createItemForm";
     }
 
+
+//    @PostMapping("/items/new")
+//    public String create(ItemForm form) {
+//
+//        Book book = new Book();
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
+//        //##리팩토링. set 갈기는 것보다는 createBook 이런식으로 파라미터를 넘기는게 더 나은 설계. 나중에 수정 요망
+//
+//
+//        itemService.saveItem(book);
+//
+//        return "redirect:/";
+//    }
+
+
     @PostMapping("/items/new")
-    public String create(BookForm form) {
-
-        Book book = new Book();
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
-        //##리팩토링. set 갈기는 것보다는 createBook 이런식으로 파라미터를 넘기는게 더 나은 설계. 나중에 수정 요망
-
-
-        itemService.saveItem(book);
-
-        return "redirect:/";
-    }
-
-    @PostMapping("/items/new")
-    public String create(BookForm form, @RequestParam("dtype") String dtype) {
+    public String create(ItemForm form, @RequestParam("dtype") String dtype) {
         Item item;
 
         switch (dtype) {
@@ -51,16 +53,20 @@ public class ItemController {
                 book.setName(form.getName());
                 book.setPrice(form.getPrice());
                 book.setStockQuantity(form.getStockQuantity());
-                book.setAuthor(form.getAuthor());
-                book.setIsbn(form.getIsbn());
+                if (form.getAuthor() != null) {
+                    book.setAuthor(form.getAuthor());
+                }
+                if (form.getIsbn() != null) {
+                    book.setIsbn(form.getIsbn());
+                }
                 item = book;
                 break;
             case "A":
                 Album album = new Album();
-                // Set album-specific fields here
+                // Album 특화 필드 설정
                 item = album;
                 break;
-            // Add cases for other types as needed
+            // 다른 아이템 유형에 대한 처리
             default:
                 throw new IllegalArgumentException("Unsupported item type");
         }
@@ -68,6 +74,7 @@ public class ItemController {
         itemService.saveItem(item);
         return "redirect:/";
     }
+
 
 
     @GetMapping("/items")
@@ -82,7 +89,7 @@ public class ItemController {
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
 
         Book item = (Book) itemService.findOne(itemId);
-        BookForm form = new BookForm();
+        ItemForm form = new ItemForm();
 
         form.setId(item.getId());
         form.setName(item.getName());
@@ -97,7 +104,7 @@ public class ItemController {
     @PostMapping("/items/{itemId}/edit")
     //@ModelAttribute : 해당 객체의 데이터를 모델에 바인딩시키고, JSP 등에서 해당 모델을 참조
     //##혹시 모르는 부분
-    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") ItemForm form) {
 
 //        Book book = new Book();
 
