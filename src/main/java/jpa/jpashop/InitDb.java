@@ -3,6 +3,7 @@ package jpa.jpashop;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jpa.jpashop.domain.*;
+import jpa.jpashop.domain.item.Album;
 import jpa.jpashop.domain.item.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -88,6 +89,8 @@ public class InitDb {
             delivery.setAddress(member.getAddress());
             return delivery;
         }
+
+//        private Album createAlbum(String name,)
     }
 }
 

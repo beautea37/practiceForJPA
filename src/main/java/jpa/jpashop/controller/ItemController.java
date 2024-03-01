@@ -1,16 +1,14 @@
 package jpa.jpashop.controller;
 
 
+import jpa.jpashop.domain.item.Album;
 import jpa.jpashop.domain.item.Book;
 import jpa.jpashop.domain.item.Item;
 import jpa.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,6 +40,35 @@ public class ItemController {
 
         return "redirect:/";
     }
+
+    @PostMapping("/items/new")
+    public String create(BookForm form, @RequestParam("dtype") String dtype) {
+        Item item;
+
+        switch (dtype) {
+            case "B":
+                Book book = new Book();
+                book.setName(form.getName());
+                book.setPrice(form.getPrice());
+                book.setStockQuantity(form.getStockQuantity());
+                book.setAuthor(form.getAuthor());
+                book.setIsbn(form.getIsbn());
+                item = book;
+                break;
+            case "A":
+                Album album = new Album();
+                // Set album-specific fields here
+                item = album;
+                break;
+            // Add cases for other types as needed
+            default:
+                throw new IllegalArgumentException("Unsupported item type");
+        }
+
+        itemService.saveItem(item);
+        return "redirect:/";
+    }
+
 
     @GetMapping("/items")
     public String list(Model model) {
