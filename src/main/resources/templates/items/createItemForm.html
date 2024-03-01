@@ -1,17 +1,39 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header" />
+<script>
+    function toggleFields() {
+        var dtype = document.getElementById('dtype').value;
+        if (dtype == 'B') {
+            document.getElementById('authorField').style.display = '';
+            document.getElementById('artistField').style.display = 'none';
+            document.getElementById('isbnField').style.display = '';
+            document.getElementById('etcField').style.display = 'none';
+        } else if (dtype == 'A') {
+            document.getElementById('artistField').style.display = '';
+            document.getElementById('authorField').style.display = 'none';
+            document.getElementById('isbnField').style.display = 'none';
+            document.getElementById('etcField').style.display = '';
+        }
+    }
+    // 페이지 로드 시 초기 필드 상태 설정
+    window.onload = function() {
+        toggleFields();
+    };
+</script>
+
+
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
     <form th:action="@{/items/new}" th:object="${form}" method="post">
 
+        <!-- Item Type 선택 -->
         <div class="form-group">
             <label for="dtype">Item Type</label>
-            <select id="dtype" name="dtype" class="form-control">
+            <select id="dtype" name="dtype" class="form-control" onchange="toggleFields()">
                 <option value="B">Book</option>
                 <option value="A">Album</option>
-                <!-- Add other item types as needed -->
             </select>
         </div>
 
@@ -29,16 +51,37 @@
             <label th:for="stockQuantity">수량</label>
             <input type="number" th:field="*{stockQuantity}" class="form-control" placeholder="수량을 입력하세요">
         </div>
-        <div class="form-group">
-            <label th:for="author">저자</label>
-            <input type="text" th:field="*{author}" class="form-control"
-                   placeholder="저자를 입력하세요">
+
+        <!-- Author 필드 -->
+        <div class="form-group" id="authorField" style="display:none">
+            <label th:for="author">Author</label>
+            <input type="text" th:field="*{author}" class="form-control" placeholder="Enter author">
         </div>
-        <div class="form-group">
+        <!-- Artist 필드 -->
+        <div class="form-group" id="artistField" style="display:none">
+            <label for="artist">Artist</label>
+            <input type="text" name="artist" class="form-control" placeholder="Enter artist">
+        </div>
+        <!-- ISBN 필드 -->
+        <div class="form-group" id="isbnField" style="display:none">
             <label th:for="isbn">ISBN</label>
-            <input type="text" th:field="*{isbn}" class="form-control"
-                   placeholder="ISBN을 입력하세요">
+            <input type="text" th:field="*{isbn}" class="form-control" placeholder="Enter ISBN">
         </div>
+        <!-- etc 필드 -->
+        <div class="form-group" id="etcField" style="display:none">
+            <label for="etc">ETC</label>
+            <input type="text" name="etc" class="form-control" placeholder="Enter etc">
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label th:for="author">저자</label>-->
+<!--            <input type="text" th:field="*{author}" class="form-control"-->
+<!--                   placeholder="저자를 입력하세요">-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label th:for="isbn">ISBN</label>-->
+<!--            <input type="text" th:field="*{isbn}" class="form-control"-->
+<!--                   placeholder="ISBN을 입력하세요">-->
+<!--        </div>-->
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <br/>

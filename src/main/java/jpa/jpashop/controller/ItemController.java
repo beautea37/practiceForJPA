@@ -63,6 +63,16 @@ public class ItemController {
                 break;
             case "A":
                 Album album = new Album();
+                album.setName(form.getName());
+                album.setPrice(form.getPrice());
+                album.setStockQuantity(form.getStockQuantity());
+                if (form.getArtist() != null) {
+                    album.setArtist(form.getArtist());
+                }
+                if (form.getEtc() != null) {
+                    album.setEtc(form.getEtc());
+                }
+
                 // Album 특화 필드 설정
                 item = album;
                 break;
